@@ -1,7 +1,11 @@
 import express from 'express'
 import cors from 'cors'
-import bodyParser from 'body-parser'
+import dotenv from 'dotenv'
 import SpotifyWebApi from 'spotify-web-api-node'
+
+if (process.env.NODE_ENV !== 'production') {
+   dotenv.config()
+}
 
 const app = express()
 app.use(cors())
@@ -12,7 +16,7 @@ app.post('/refresh', (req, res) => {
    console.log('hi')
    const spotifyApi = new SpotifyWebApi({
       clientId: 'db0981169c6048b9b995897f6b3e0b18',
-      clientSecret: '589fac9ade1645478543bfe422cd521e',
+      clientSecret: process.env.SECRET,
       redirectUri: 'http://localhost:3000',
       refreshToken
    })
@@ -35,7 +39,7 @@ app.post('/login', (req, res) => {
    const code = req.body.code
    const spotifyApi = new SpotifyWebApi({
       clientId: 'db0981169c6048b9b995897f6b3e0b18',
-      clientSecret: '589fac9ade1645478543bfe422cd521e',
+      clientSecret: process.env.SECRET,
       redirectUri: 'http://localhost:3000'
    })
 
