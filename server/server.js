@@ -36,28 +36,9 @@ app.post('/refresh', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-   const code = req.body.code
    const spotifyApi = new SpotifyWebApi({
       clientId: 'db0981169c6048b9b995897f6b3e0b18',
       clientSecret: process.env.SECRET,
       redirectUri: 'http://localhost:3000'
    })
-
-   spotifyApi
-      .authorizationCodeGrant(code)
-      .then((data) => {
-         res.json({
-            accessToken: data.body.access_token,
-            refreshToken: data.body.refresh_token,
-            expiresIn: data.body.expires_in
-         })
-      })
-      .catch((e) => {
-         console.log(e)
-         res.sendStatus(400)
-      })
-})
-
-app.listen(5000, () => {
-   console.log('🚀 Server is running on port 5000')
 })
